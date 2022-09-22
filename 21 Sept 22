@@ -7,7 +7,7 @@ public:
         {
             if(nums[i]%2==0)
             {
-                s+=nums[i]; //initially storing all even indices sum
+                s+=nums[i]; 
             }
         }
         vector<int> ans;
@@ -20,17 +20,17 @@ public:
                 int x=nums[indx]; 
                 nums[indx]+=val;
                 if(nums[indx]%2==0)
-                s+=val; // if by adding val still even then adding val to previous sum (s)
+                s+=val;
                 else
                 {
-                    s-=x; // if nums[indx] initially even but after adding val becoming odd then subtracting from sum(s)
+                    s-=x;
                 }
             }
             else
             {
                 nums[indx]+=val;
                 if(nums[indx]%2==0)
-                s+=nums[indx]; // if nums[indx] initially odd after adding val becoming even then adding to previous sum(s)
+                s+=nums[indx];
             }
             ans.push_back(s);
             
@@ -38,3 +38,5 @@ public:
         return ans;
     }
 };
+
+//Coded by Kushal Singh
