@@ -1,0 +1,71 @@
+class Solution {
+ public:
+  vector<vector<int>> palindromePairs(const vector<string> &words) {
+    const int n = static_cast<int>(words.size());
+    unordered_map<string_view, int> word_to_index;
+    int max_word_length = 0;
+    for (int i = 0; i < n; ++i) {
+      word_to_index[words[i]] = i;
+      max_word_length = max(max_word_length, static_cast<int>(words[i].size()));
+    }
+    bool word_lengths[max_word_length + 1];
+    memset(word_lengths, 0, sizeof(word_lengths));
+    for (const string &word : words) {
+      word_lengths[static_cast<int>(word.size())] = true;
+    }
+    
+    vector<vector<int>> ret;
+    for (int i = 0; i < n; ++i) {
+      string reversed(words[i]);
+      reverse(reversed.begin(), reversed.end());
+      const int n_word = static_cast<int>(reversed.size());
+      
+      for (int target_length = 0; target_length < n_word + 1; ++target_length) {
+        if (!word_lengths[target_length]) {
+          continue;
+        }
+
+        /**
+         * 1. try to put the current word to the second position of the pair of the words,
+         *    the concatenation of which is a palindrome.
+         */
+        const int postfix_length = n_word - target_length;
+        if (postfix_length < 2 || is_palindrome(reversed, n_word - postfix_length, n_word - 1)) {
+          string_view target(reversed.c_str(), target_length);
+          auto itr = word_to_index.find(target);
+          if (itr != word_to_index.end() && itr->second != i) {
+            ret.emplace_back(vector<int>{itr->second, i});
+          }
+        }
+        
+        if (target_length == n_word) {
+          continue;
+        }
+        
+        /**
+         * 2. try to put the current word to the first position of the pair of the words,
+         *    the concatenation of which is a palindrome.
+         */
+        const int prefix_length = n_word - target_length;
+        if (prefix_length < 2 || is_palindrome(reversed, 0, prefix_length - 1)) {
+          string_view target(reversed.c_str() + prefix_length);
+          auto itr = word_to_index.find(target);
+          if (itr != word_to_index.end() && itr->second != i) {
+            ret.emplace_back(vector<int>{i, itr->second});
+          }
+        }
+      }
+    }
+    return ret;
+  }
+  
+ private:
+  bool is_palindrome(const string &s, int begin, int end) {
+    for (; begin < end; ++begin, --end) {
+      if (s[begin] != s[end]) {
+        return false;
+      }
+    }
+    return true;
+  }
+};
