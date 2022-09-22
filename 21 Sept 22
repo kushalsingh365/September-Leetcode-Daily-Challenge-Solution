@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
+        int n=nums.size();
+        int s=0;
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]%2==0)
+            {
+                s+=nums[i]; //initially storing all even indices sum
+            }
+        }
+        vector<int> ans;
+        for(int i=0;i<queries.size();i++)
+        {
+            int indx=queries[i][1];
+            int val=queries[i][0];
+            if(nums[indx]%2==0)
+            {
+                int x=nums[indx]; 
+                nums[indx]+=val;
+                if(nums[indx]%2==0)
+                s+=val; // if by adding val still even then adding val to previous sum (s)
+                else
+                {
+                    s-=x; // if nums[indx] initially even but after adding val becoming odd then subtracting from sum(s)
+                }
+            }
+            else
+            {
+                nums[indx]+=val;
+                if(nums[indx]%2==0)
+                s+=nums[indx]; // if nums[indx] initially odd after adding val becoming even then adding to previous sum(s)
+            }
+            ans.push_back(s);
+            
+        }
+        return ans;
+    }
+};
