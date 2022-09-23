@@ -12,6 +12,7 @@ public:
                 string name = dir + '/' + file.substr(0, file.find('('));
                 hash[content].push_back(name);
             }
+            
         }
         vector<vector<string>> res;
         for (auto it = hash.begin(); it != hash.end(); it++) {
