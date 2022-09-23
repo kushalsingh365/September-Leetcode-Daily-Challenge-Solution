@@ -24,11 +24,6 @@ class Solution {
         if (!word_lengths[target_length]) {
           continue;
         }
-
-        /**
-         * 1. try to put the current word to the second position of the pair of the words,
-         *    the concatenation of which is a palindrome.
-         */
         const int postfix_length = n_word - target_length;
         if (postfix_length < 2 || is_palindrome(reversed, n_word - postfix_length, n_word - 1)) {
           string_view target(reversed.c_str(), target_length);
@@ -41,11 +36,6 @@ class Solution {
         if (target_length == n_word) {
           continue;
         }
-        
-        /**
-         * 2. try to put the current word to the first position of the pair of the words,
-         *    the concatenation of which is a palindrome.
-         */
         const int prefix_length = n_word - target_length;
         if (prefix_length < 2 || is_palindrome(reversed, 0, prefix_length - 1)) {
           string_view target(reversed.c_str() + prefix_length);
