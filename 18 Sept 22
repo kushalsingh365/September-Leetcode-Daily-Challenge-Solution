@@ -16,7 +16,6 @@ public:
         for(int i = 1; i < N - 1; i++) {
             ans += max(0, min(left[i], right[i]) - A[i]);
         }
-        
         return ans;
         
     }
