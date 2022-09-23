@@ -6,11 +6,9 @@ public:
         
         if (j == M.size()) return 0;
         if (dp[i][j] != INT_MIN) return dp[i][j];
-        
-        // Left Side
+
         int left = solve(i + 1, n, j + 1, nums, M) + (nums[i] * M[j]);
-        
-        // Right Side
+
         int right = solve(i, n, j + 1, nums, M) + (nums[(n - 1) - (j - i)] * M[j]);
         
         return dp[i][j] = max(left, right);
