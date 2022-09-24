@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int> > vv;
+    
+    void inorder(TreeNode* root,int target,int sum,vector<int> v)
+    {
+        if(root!=NULL)
+        {
+            v.push_back(root->val);
+            sum+=root->val;
+            
+            if(sum == target and root->left==NULL and root->right==NULL)
+                vv.push_back(v);
+            
+             inorder(root->left,target,sum,v);
+             inorder(root->right,target,sum,v);
+            
+        }
+    }
+    
+    vector<vector<int>> pathSum(TreeNode* root, int target) {
+        
+        vector<int> v;
+        
+        inorder(root,target,0,v);
+        
+        return vv;
+        
+    }
+};
