@@ -2,7 +2,6 @@ class Solution {
 public:
     string pushDominoes(string dominoes) {
        int n=dominoes.size();
-        
        vector<int> left(n,-1) , right(n);
        for(int i=0;i<n;i++){
            if(dominoes[i] != '.') left[i] = i;
